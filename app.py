@@ -10,6 +10,19 @@ from tensorflow.keras.models import load_model
 # Setting custom Page Title and Icon with changed layout and sidebar state
 st.set_page_config(page_title='Face Mask Detector', page_icon='😷', layout='centered', initial_sidebar_state='expanded')
 
+# def return_camera_indices():
+#     index = -2
+#     arr =[]
+#     i = 10
+#     while i> 0:
+#         cap = cv2.VideoCapture(index)
+#         if cap.read()[0]:
+#             arr.append(index)
+#             cap.release()
+#         index+=1
+#         i-=1
+#     return arr
+# print (return_camera_indices())
 
 def local_css(file_name):
     """ Method for reading styles.css and applying necessary changes to HTML"""
@@ -165,14 +178,14 @@ def detect_and_predict_mask(frame, faceNet, maskNet):
 
 def mask_detection():
     local_css("css/styles.css")
-    st.markdown('<h1 align="center">Face-Mask Detection</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 align="center">Face-Mask Detector</h1>', unsafe_allow_html=True)
     activities = ["Image", "LiveCam"]
     st.set_option('deprecation.showfileUploaderEncoding', False)
-    st.sidebar.markdown("# Mask Detection ON ?")
+    st.sidebar.markdown("# Mask Detector by Ajinkya!")
     choice = st.sidebar.selectbox("Choose among the given options:", activities)
 
     if choice == 'Image':
-        st.markdown('<h2 align="center">Image Detection</h2>', unsafe_allow_html=True)
+        st.markdown('<h2 align="center">Image Detector</h2>', unsafe_allow_html=True)
         st.markdown("### Upload the image to detect mask here ⬇")
         image_file = st.file_uploader("", type=['jpg'])  # upload image
         if image_file is not None:
@@ -184,7 +197,7 @@ def mask_detection():
                 st.image(RGB_img, use_column_width=True)
 
     if choice == 'LiveCam':
-        st.markdown('<h2 align="center">Webcam Detection</h2>', unsafe_allow_html=True)
+        st.markdown('<h2 align="center">Webcam Detector</h2>', unsafe_allow_html=True)
         # st.markdown('<h3 align="center">This feature will be available soon!</h3>', unsafe_allow_html=True)
 
         st.title("Live WebCam Testing Application")
