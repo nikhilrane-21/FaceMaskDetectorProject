@@ -9,10 +9,10 @@ ap.add_argument("-q", "--query", required=True,
 ap.add_argument("-o", "--output", required=True,
 	help="path to output directory of images")
 args = vars(ap.parse_args())
-API_KEY = "d8982f9e69a4437fa6e10715d1ed691d"
+API_KEY = "9bac0237a7a94ac7a1236ecf02b23297"
 MAX_RESULTS = 500
 GROUP_SIZE = 50
-URL = "https://api.cognitive.microsoft.com/bing/v7.0/images/search"
+URL = "https://api.bing.microsoft.com/v7.0/images/search"
 EXCEPTIONS = set([IOError, FileNotFoundError,
 	exceptions.RequestException, exceptions.HTTPError,
 	exceptions.ConnectionError, exceptions.Timeout])

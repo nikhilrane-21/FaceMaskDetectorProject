@@ -1,3 +1,7 @@
+# command
+# streamlit run app.py
+
+# importing necessary packages
 import streamlit as st
 from PIL import Image, ImageEnhance
 import numpy as np
@@ -10,22 +14,9 @@ from tensorflow.keras.models import load_model
 # Setting custom Page Title and Icon with changed layout and sidebar state
 st.set_page_config(page_title='Face Mask Detector', page_icon='😷', layout='centered', initial_sidebar_state='expanded')
 
-# def return_camera_indices():
-#     index = -2
-#     arr =[]
-#     i = 10
-#     while i> 0:
-#         cap = cv2.VideoCapture(index)
-#         if cap.read()[0]:
-#             arr.append(index)
-#             cap.release()
-#         index+=1
-#         i-=1
-#     return arr
-# print (return_camera_indices())
 
 def local_css(file_name):
-    """ Method for reading styles.css and applying necessary changes to HTML"""
+    # Method for reading styles.css
     with open(file_name) as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
@@ -103,9 +94,13 @@ def mask_image():
                         cv2.FONT_HERSHEY_SIMPLEX, 0.45, color, 2)
             cv2.rectangle(image, (startX, startY), (endX, endY), color, 2)
             RGB_img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+
 mask_image()
 
 global frame, faceNet, maskNet
+
+
 def detect_and_predict_mask(frame, faceNet, maskNet):
     # grab the dimensions of the frame and then construct a blob
     # from it
@@ -113,7 +108,7 @@ def detect_and_predict_mask(frame, faceNet, maskNet):
 
     (h, w) = frame.shape[:2]
     blob = cv2.dnn.blobFromImage(frame, 1.0, (300, 300),
-        (104.0, 177.0, 123.0))
+                                 (104.0, 177.0, 123.0))
 
     # pass the blob through the network and obtain the face detections
     faceNet.setInput(blob)
@@ -173,15 +168,12 @@ def detect_and_predict_mask(frame, faceNet, maskNet):
 # detect_and_predict_mask(frame, faceNet, maskNet)
 
 
-
-
-
 def mask_detection():
     local_css("css/styles.css")
     st.markdown('<h1 align="center">Face-Mask Detector</h1>', unsafe_allow_html=True)
     activities = ["Image", "LiveCam"]
     st.set_option('deprecation.showfileUploaderEncoding', False)
-    st.sidebar.markdown("# Mask Detector by Ajinkya!")
+    st.sidebar.markdown("# Mask Detector !")
     choice = st.sidebar.selectbox("Choose among the given options:", activities)
 
     if choice == 'Image':
@@ -198,21 +190,16 @@ def mask_detection():
 
     if choice == 'LiveCam':
         st.markdown('<h2 align="center">Webcam Detector</h2>', unsafe_allow_html=True)
-        # st.markdown('<h3 align="center">This feature will be available soon!</h3>', unsafe_allow_html=True)
-
         st.title("Live WebCam Testing Application")
         run = st.checkbox('Start')
         print("[INFO] loading face detector model...")
         prototxtPath = os.path.sep.join(["face_detector", "deploy.prototxt"])
-        weightsPath = os.path.sep.join(["face_detector",
-                                        "res10_300x300_ssd_iter_140000.caffemodel"])
+        weightsPath = os.path.sep.join(["face_detector", "res10_300x300_ssd_iter_140000.caffemodel"])
         faceNet = cv2.dnn.readNet(prototxtPath, weightsPath)
 
-        # load the face mask detector model from disk
         print("[INFO] loading face mask detector model...")
         maskNet = load_model("mask_detector.model")
 
-        # initialize the video stream and allow the camera sensor to warm up
         print("[INFO] starting video stream...")
         FRAME_WINDOW = st.image([])
         cam = cv2.VideoCapture(1)
@@ -239,14 +226,12 @@ def mask_detection():
                 # display the label and bounding box rectangle on the output
                 # frame
                 cv2.putText(frame, label, (startX, startY - 10),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.45, color, 2)
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.7, color, 2)
                 cv2.rectangle(frame, (startX, startY), (endX, endY), color, 2)
 
             FRAME_WINDOW.image(frame)
         else:
             st.write('Stopped')
-
-
 
 
 mask_detection()
